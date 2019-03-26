@@ -1,33 +1,14 @@
-import sys
-import logging
-from ConfigParser import ConfigParser
+import BAC0
+import time
 
-from bacpypes.debugging import Logging, ModuleLogger
-from bacpypes.consolelogging import ConsoleLogHandler
+bacnet = BAC0.connect(ip='192.168.0.10')
 
-from bacpypes.core import run
-from bacpypes.app import BIPSimpleApplication
-from bacpypes.object import LocalDeviceObject
 
-#
-#   SampleApplication
-#
-
-class SampleApplication(BIPSimpleApplication, Logging):
-
-    def __init__(self, device, address):
-        if _debug: SampleApplication._debug("__init__ %r %r", device, address)
-        BIPSimpleApplication.__init__(self, device, address)
-
-def request(self, apdu):
-    if _debug: SampleApplication._debug("request %r", apdu)
-    BIPSimpleApplication.request(self, apdu)
-def indication(self, apdu):
-    if _debug: SampleApplication._debug("indication %r", apdu)
-def response(self, apdu):
-    if _debug: SampleApplication._debug("response %r", apdu)
-    BIPSimpleApplication.response(self, apdu)
-def confirmation(self, apdu):
-    if _debug: SampleApplication._debug("confirmation %r", apdu)
-    BIPSimpleApplication.confirmation(self, apdu)
+controller = BAC0.device('192.168.0.90', 127001, bacnet,poll=0)
+while True:
+    now_result = controller.points[1].properties
+    result_read = controller.points[1].value
+    print(now_result)
+    print(result_read)
+    time.sleep(5)
 

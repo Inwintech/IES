@@ -5,7 +5,7 @@ import time
 bacnet = BAC0.connect(ip='192.168.0.10')
 
 
-controller = BAC0.device('192.168.0.90', 127001, bacnet)
+controller = BAC0.device('192.168.0.90', 127001, bacnet,poll=0)
 points = controller.points
 
 count_points = len(points)
@@ -13,8 +13,6 @@ print(count_points)
 
 while True:
     for i in range(count_points):
-        str_controller = str(points[i])
-        print(str_controller)
-        result_data = str_controller.rsplit(" ")
-        print(result_data[2])
+        value_controller = points[i].value
+        print(value_controller)
     time.sleep(5)
