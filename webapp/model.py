@@ -8,6 +8,7 @@ class Datas(db.Model):
     device = db.Column(db.String, nullable=False)            #имя контроллера
     description = db.Column(db.String, nullable=False)       #описание переменной
     published = db.Column(db.DateTime, nullable=False)       #время записи
-    value = db.Column(db.Float, nullable=False)              #значение переменной
+    value = db.Column(db.String, nullable=False)              #значение переменной
 
-    
+def __repr__(self):
+    return '<Datas {} {}>'.format(self.description, self.value)

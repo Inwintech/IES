@@ -1,4 +1,5 @@
 import BAC0
+from webapp.model import db, Datas
 from datetime import datetime
 import pandas as pd
 
@@ -12,11 +13,23 @@ print (bacnet.whois())
 print (bacnet.devices)
 print(controller)
 
-for point in controller.points:
-    if point.properties.type == 'analogInput' or point.properties.type == 'analogValue':
-        print(point.value)
-    else:
-        print(point.boolValue)
+def get_datas():
+    for point in controller.points:
+        device = point.properties.name                   
+        description = point.properties.description       
+        published = datetime.now()    
+        value = point.value
+        save_datas(device,description,published,value)
+
+def save_datas(device,description,published,value):
+    new_datas = Datas(device=device,description=description,published=published,value=value)
+    db.session.add(new_datas)
+    db.session.commit()
+
+    #if point.properties.type == 'analogInput' or point.properties.type == 'analogValue':
+        #print(point.value)
+    #else:
+        #print(point.boolValue)
     
     
     #print(point.properties.name, point.properties.type, point.properties.description, point.value)
