@@ -1,19 +1,17 @@
 from flask import Flask, render_template
-
 from webapp.model import db, Datas
-#from webapp.weater import weather_by_city
+
 
 def create_app():
-    app=Flask (__name__)
+    app=Flask(__name__)
     app.config.from_pyfile('config.py')
     db.init_app(app)
 
     @app.route('/')
     def index():
         title='BAC0 данные'
-        #weather=weather_by_city(app.config['WEATHER_DEFAULT_CITY'])
-        #news_list= News.query.ordered_by(News.published.desc()).all()
-        #return render_template('index.html',page_title=title,weather=weather,news_list=news_list)
+        datas_list=Datas.query.all()
+        return render_template('index.html',page_title=title,datas_list=datas_list)
 
 
     return app
