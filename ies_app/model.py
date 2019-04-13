@@ -1,5 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 
+from sqlalchemy.ext.declarative import declarative_base 
+from sqlalchemy import Column, Integer, String, create_engine 
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+Base = declarative_base() 
+DBSession = scoped_session(sessionmaker()) 
+engine = None
+
 db = SQLAlchemy()
 
 class Data_controller(db.Model):
@@ -12,3 +20,12 @@ class Data_controller(db.Model):
     def __repr__(self):
         return '<Data_controller {} {} {} {} {}>'.format(self.name_point, self.description_point,\
         self.value_point, self.time_save)
+"""
+def init_sqlalchemy(dbname='sqlite:///ies_1.db'): 
+    global engine 
+    engine = create_engine(dbname, echo=False) 
+    DBSession.remove() 
+    DBSession.configure(bind=engine, autoflush=False, expire_on_commit=False) 
+    Base.metadata.drop_all(engine) 
+    Base.metadata.create_all(engine) 
+"""
