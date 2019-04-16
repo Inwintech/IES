@@ -1,4 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime              #нужна для того, чтобы писать время от сюда в базу данных
 from app import db
 
