@@ -1,12 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime              #нужна для того, чтобы писать время от сюда в базу данных
 
-from sqlalchemy.ext.declarative import declarative_base 
-from sqlalchemy import Column, Integer, String, create_engine 
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import Column, Integer, String
 
-Base = declarative_base() 
-DBSession = scoped_session(sessionmaker()) 
-engine = None
+
 
 db = SQLAlchemy()
 
@@ -15,17 +12,8 @@ class Data_controller(db.Model):
     name_point = db.Column(db.String, nullable=False)         #имя контроллера
     description_point = db.Column(db.String, nullable=False)  #описание переменной
     value_point = db.Column(db.String, nullable=False)        #значение переменной
-    time_save = db.Column(db.DateTime, nullable=False)        #время записи
+    time_save = db.Column(db.DateTime, default=datetime.utcnow)        #время записи берется прям из этого модуля!
     
     def __repr__(self):
         return '<Data_controller {} {} {} {} {}>'.format(self.name_point, self.description_point,\
         self.value_point, self.time_save)
-"""
-def init_sqlalchemy(dbname='sqlite:///ies_1.db'): 
-    global engine 
-    engine = create_engine(dbname, echo=False) 
-    DBSession.remove() 
-    DBSession.configure(bind=engine, autoflush=False, expire_on_commit=False) 
-    Base.metadata.drop_all(engine) 
-    Base.metadata.create_all(engine) 
-"""
